@@ -75,11 +75,6 @@ export default function TelaLogin(props) {
             CADASTRAR-SE
             </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => abrirCarrinho()} style={styles.buttonCad}>
-          <Text style={styles.textCad}>
-            Carrinho
-            </Text>
-        </TouchableOpacity>
 
       </View>
 
