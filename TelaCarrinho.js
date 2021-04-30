@@ -116,7 +116,6 @@ const mostrarCartoes = async () => {
       <View style={styles.container}>
         <TextInput
           style={styles.input}
-          secureTextEntry={true}
           placeholder='Endereço'
           autoCorrect={false}
           value={endereco}
