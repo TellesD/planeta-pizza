@@ -66,6 +66,10 @@ export default function Produtos(props) {
 	  useEffect(() => {
 		setHabilitarBotao(produto && preco && quantidade && descricao)
 	  }, [produto, preco, quantidade, descricao])
+	  
+	  const abrirCarrinho = () => {
+		props.navigation.navigate('Carrinho')
+	  }
 
 
 	return (
@@ -128,6 +132,11 @@ export default function Produtos(props) {
 					<TouchableOpacity onPress={() => deletar()} style={styles.button}>
 						<Text style={styles.textButton}>
 							EXCLUIR
+            		</Text>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => abrirCarrinho()} style={styles.button}>
+						<Text style={styles.textButton}>
+							carrinho
             		</Text>
 					</TouchableOpacity>
 				</View>

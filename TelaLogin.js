@@ -22,7 +22,7 @@ export default function TelaLogin(props) {
     let usuario = JSON.parse(value)
 
     if (email == usuario.Email && senha == usuario.Senha)
-      console.warn('Você está logado');
+      abrirProduto()
     else{
       console.warn('Você não está logado');
     }
@@ -37,8 +37,8 @@ export default function TelaLogin(props) {
   const abrirCadastro = () => {
     props.navigation.navigate('TelaCad')
   }
-  const abrirCarrinho = () => {
-    props.navigation.navigate('TelaCarrinho')
+  const abrirProduto = () => {
+    props.navigation.navigate('Produto')
   }
   return (
     <KeyboardAvoidingView style={styles.background}>

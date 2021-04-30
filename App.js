@@ -17,13 +17,14 @@ import TelaLogin from './TelaLogin'
 import TelaCad from './TelaCad'
 import Produto from './Produto'
 import Pagamento from './index'
+import TelaCarrinho from './TelaCarrinho';
 
 const stackNavigation = createStackNavigator()
 
 export default function App() {
   return (
     <NavigationContainer>
-      <stackNavigation.Navigator initialRouteName='Produto' >
+      <stackNavigation.Navigator initialRouteName='TelaLogin' >
         <stackNavigation.Screen
           name='TelaLogin'
           component={TelaLogin}
@@ -38,6 +39,11 @@ export default function App() {
       <stackNavigation.Screen
         name='Pagamento'
         component={Pagamento}
+        options={{ headerShown: false }}
+      />
+        <stackNavigation.Screen
+        name='Carrinho'
+        component={TelaCarrinho}
         options={{ headerShown: false }}
       />
         <stackNavigation.Screen
