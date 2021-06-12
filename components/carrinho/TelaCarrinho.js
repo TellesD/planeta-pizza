@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import CarrinhoService from '../../services/CarrinhoService'
+
 import {
   StyleSheet,
   Text,
@@ -11,13 +13,14 @@ import {
   ScrollView, 
   Picker
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import CartaoService from '../../services/CartaoService';
+
 
 
 export default function TelaCarrinho(props) {
   const [cartao, setSelectedValue] = useState("");
   const [endereco, setEndereco] = useState('');
-  const [habilitarBotao, setHabilitarBotao] = useState(false);
+
   const [exibir, setExibir] = useState([]);
 
   const [pedidos, setPedidos] = useState([
@@ -29,56 +32,41 @@ export default function TelaCarrinho(props) {
 
   useEffect(() => {
   mostrarCartoes();
-  })
+  },[])
  
-const fazerCompra = () =>{
-  console.tron.log(cartao)
-  AsyncStorage.setItem('pedido', JSON.stringify({pedidos, cartao, endereco}))
-  alert("pedido realizado");
+const fazerCompra = async () =>{
+  
+ try{ const data= {pedidos, cartao, endereco}
+ if(!endereco|| !cartao){
+  alert("dados incompletos")
+}else{CarrinhoService.create(data);
+  alert("pedido realizado")}
+}
+  catch{
+    alert("erro ao adicionar pedido")
+  }
   
 }
 const mostrarCartoes = async () => {
   try {
     
-    const dados = await AsyncStorage.getItem('zap');
-    if(dados) {
-    setExibir(JSON.parse(dados));
-  }else{
-      setExibir([{nomeCartao: 'sem cartões'}]);
-    }
-  } catch (e) {
+    const dados = await CartaoService.get();
+        setExibir(dados.data);}
+   catch (e) {
     alert('Falha ao mostrar cartões')
   }
   }
 
   const mostrarCompra = async () => {
-    try {
-      
-      const dados = await AsyncStorage.getItem('pedido');
-      if(dados) {
-      alert(dados);
-      
-    }else{
-      alert("sem pedidos");
-    }
-    } catch (e) {
-      alert('Falha ao mostrar pedidos');
-    }
+    props.navigation.navigate('ListarPedido')
     }
 
-    const deletar = async () => {
-      try {
-        await AsyncStorage.clear()
-        alert('Compras canceladas');
-      } catch (e) {
-        alert('Falha ao cancelar compras')
-      }
-    }
 
 
   const abrirPagamento = () => {
     props.navigation.navigate('Pagamento')
   }
+	  
   return (
     <KeyboardAvoidingView style={styles.background}>
       <Text style={styles.letra} >
@@ -129,11 +117,6 @@ const mostrarCartoes = async () => {
         <TouchableOpacity  onPress={() => mostrarCompra()} style={styles.buttonCad}>
           <Text style={styles.textCad}>
             mostrar pedidos
-            </Text>
-        </TouchableOpacity>
-        <TouchableOpacity  onPress={() => deletar()} style={styles.buttonCad}>
-          <Text style={styles.textCad}>
-            Cancelar pedidos
             </Text>
         </TouchableOpacity>
 
